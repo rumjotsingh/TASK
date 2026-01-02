@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import './ContactForm.css';
 
-const ContactForm = ({ onContactAdded }) => {
+const ContactForm = ({ onContactAdded, apiUrl }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -80,7 +79,7 @@ const ContactForm = ({ onContactAdded }) => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('/api/contacts', {
+      const response = await fetch(`${apiUrl}/api/contacts`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -132,26 +131,26 @@ const ContactForm = ({ onContactAdded }) => {
   };
 
   return (
-    <div className="contact-form-container">
-      <h2>Contact Us</h2>
-      <p className="form-subtitle">We'd love to hear from you!</p>
+    <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-xl p-8 mb-8">
+      <h2 className="text-3xl font-bold text-gray-800 mb-2">Contact Us</h2>
+      <p className="text-gray-600 mb-6">We'd love to hear from you!</p>
 
       {successMessage && (
-        <div className="success-message">
+        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
           ✓ {successMessage}
         </div>
       )}
 
       {errors.submit && (
-        <div className="error-message">
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
           ✗ {errors.submit}
         </div>
       )}
 
       <form onSubmit={handleSubmit} noValidate>
-        <div className="form-group">
-          <label htmlFor="name">
-            Name <span className="required">*</span>
+        <div className="mb-4">
+          <label htmlFor="name" className="block text-gray-700 font-semibold mb-2">
+            Name <span className="text-red-500">*</span>
           </label>
           <input
             type="text"
@@ -159,15 +158,17 @@ const ContactForm = ({ onContactAdded }) => {
             name="name"
             value={formData.name}
             onChange={handleChange}
-            className={errors.name ? 'error' : ''}
+            className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${
+              errors.name ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-purple-500'
+            }`}
             placeholder="Enter your name"
           />
-          {errors.name && <span className="error-text">{errors.name}</span>}
+          {errors.name && <span className="text-red-500 text-sm mt-1 block">{errors.name}</span>}
         </div>
 
-        <div className="form-group">
-          <label htmlFor="email">
-            Email <span className="required">*</span>
+        <div className="mb-4">
+          <label htmlFor="email" className="block text-gray-700 font-semibold mb-2">
+            Email <span className="text-red-500">*</span>
           </label>
           <input
             type="email"
@@ -175,15 +176,17 @@ const ContactForm = ({ onContactAdded }) => {
             name="email"
             value={formData.email}
             onChange={handleChange}
-            className={errors.email ? 'error' : ''}
+            className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${
+              errors.email ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-purple-500'
+            }`}
             placeholder="Enter your email"
           />
-          {errors.email && <span className="error-text">{errors.email}</span>}
+          {errors.email && <span className="text-red-500 text-sm mt-1 block">{errors.email}</span>}
         </div>
 
-        <div className="form-group">
-          <label htmlFor="phone">
-            Phone <span className="required">*</span>
+        <div className="mb-4">
+          <label htmlFor="phone" className="block text-gray-700 font-semibold mb-2">
+            Phone <span className="text-red-500">*</span>
           </label>
           <input
             type="tel"
@@ -191,30 +194,34 @@ const ContactForm = ({ onContactAdded }) => {
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            className={errors.phone ? 'error' : ''}
+            className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${
+              errors.phone ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-purple-500'
+            }`}
             placeholder="Enter your phone number"
           />
-          {errors.phone && <span className="error-text">{errors.phone}</span>}
+          {errors.phone && <span className="text-red-500 text-sm mt-1 block">{errors.phone}</span>}
         </div>
 
-        <div className="form-group">
-          <label htmlFor="message">Message</label>
+        <div className="mb-4">
+          <label htmlFor="message" className="block text-gray-700 font-semibold mb-2">Message</label>
           <textarea
             id="message"
             name="message"
             value={formData.message}
             onChange={handleChange}
-            className={errors.message ? 'error' : ''}
+            className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${
+              errors.message ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-purple-500'
+            }`}
             placeholder="Enter your message (optional)"
             rows="4"
           />
-          {errors.message && <span className="error-text">{errors.message}</span>}
-          <span className="char-count">{formData.message.length}/500</span>
+          {errors.message && <span className="text-red-500 text-sm mt-1 block">{errors.message}</span>}
+          <span className="text-gray-500 text-sm mt-1 block text-right">{formData.message.length}/500</span>
         </div>
 
         <button
           type="submit"
-          className="submit-btn"
+          className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
           disabled={!isFormValid() || isSubmitting}
         >
           {isSubmitting ? 'Submitting...' : 'Submit Contact'}

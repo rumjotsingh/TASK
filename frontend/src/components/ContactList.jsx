@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import './ContactList.css';
 
-const ContactList = ({ contacts, onDeleteContact }) => {
+const ContactList = ({ contacts, onDeleteContact, apiUrl }) => {
   const [sortConfig, setSortConfig] = useState({ key: 'createdAt', direction: 'desc' });
   const [deleteConfirm, setDeleteConfirm] = useState(null);
 
@@ -36,7 +35,7 @@ const ContactList = ({ contacts, onDeleteContact }) => {
   // Handle delete
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`/api/contacts/${id}`, {
+      const response = await fetch(`${apiUrl}/api/contacts/${id}`, {
         method: 'DELETE'
       });
 
@@ -75,61 +74,73 @@ const ContactList = ({ contacts, onDeleteContact }) => {
 
   if (contacts.length === 0) {
     return (
-      <div className="contact-list-container">
-        <h2>Contact List</h2>
-        <div className="empty-state">
-          <p>No contacts yet. Submit the form above to add your first contact!</p>
+      <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-xl p-8 mt-8">
+        <h2 className="text-3xl font-bold text-gray-800 mb-4">Contact List</h2>
+        <div className="text-center py-8">
+          <p className="text-gray-600 text-lg">No contacts yet. Submit the form above to add your first contact!</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="contact-list-container">
-      <h2>Contact List</h2>
-      <p className="contact-count">Total Contacts: {contacts.length}</p>
+    <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-xl p-8 mt-8">
+      <h2 className="text-3xl font-bold text-gray-800 mb-2">Contact List</h2>
+      <p className="text-gray-600 mb-6">Total Contacts: {contacts.length}</p>
 
-      <div className="table-container">
-        <table className="contact-table">
+      <div className="overflow-x-auto">
+        <table className="w-full border-collapse">
           <thead>
-            <tr>
-              <th onClick={() => handleSort('name')}>
+            <tr className="bg-purple-600 text-white">
+              <th 
+                onClick={() => handleSort('name')}
+                className="px-4 py-3 text-left cursor-pointer hover:bg-purple-700 transition"
+              >
                 Name {getSortIcon('name')}
               </th>
-              <th onClick={() => handleSort('email')}>
+              <th 
+                onClick={() => handleSort('email')}
+                className="px-4 py-3 text-left cursor-pointer hover:bg-purple-700 transition"
+              >
                 Email {getSortIcon('email')}
               </th>
-              <th onClick={() => handleSort('phone')}>
+              <th 
+                onClick={() => handleSort('phone')}
+                className="px-4 py-3 text-left cursor-pointer hover:bg-purple-700 transition"
+              >
                 Phone {getSortIcon('phone')}
               </th>
-              <th>Message</th>
-              <th onClick={() => handleSort('createdAt')}>
+              <th className="px-4 py-3 text-left">Message</th>
+              <th 
+                onClick={() => handleSort('createdAt')}
+                className="px-4 py-3 text-left cursor-pointer hover:bg-purple-700 transition"
+              >
                 Date {getSortIcon('createdAt')}
               </th>
-              <th>Actions</th>
+              <th className="px-4 py-3 text-left">Actions</th>
             </tr>
           </thead>
           <tbody>
-            {sortedContacts.map((contact) => (
-              <tr key={contact._id}>
-                <td data-label="Name">{contact.name}</td>
-                <td data-label="Email">{contact.email}</td>
-                <td data-label="Phone">{contact.phone}</td>
-                <td data-label="Message" className="message-cell">
-                  {contact.message || <em>No message</em>}
+            {sortedContacts.map((contact, index) => (
+              <tr key={contact._id} className={`border-b hover:bg-gray-50 transition ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}>
+                <td className="px-4 py-3">{contact.name}</td>
+                <td className="px-4 py-3 text-blue-600">{contact.email}</td>
+                <td className="px-4 py-3">{contact.phone}</td>
+                <td className="px-4 py-3 max-w-xs truncate">
+                  {contact.message || <em className="text-gray-400">No message</em>}
                 </td>
-                <td data-label="Date">{formatDate(contact.createdAt)}</td>
-                <td data-label="Actions">
+                <td className="px-4 py-3 text-sm text-gray-600">{formatDate(contact.createdAt)}</td>
+                <td className="px-4 py-3">
                   {deleteConfirm === contact._id ? (
-                    <div className="confirm-delete">
+                    <div className="flex gap-2">
                       <button
-                        className="confirm-btn"
+                        className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded transition"
                         onClick={() => handleDelete(contact._id)}
                       >
                         ✓
                       </button>
                       <button
-                        className="cancel-btn"
+                        className="bg-gray-600 hover:bg-gray-700 text-white px-3 py-1 rounded transition"
                         onClick={() => setDeleteConfirm(null)}
                       >
                         ✗
@@ -137,7 +148,7 @@ const ContactList = ({ contacts, onDeleteContact }) => {
                     </div>
                   ) : (
                     <button
-                      className="delete-btn"
+                      className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded transition"
                       onClick={() => setDeleteConfirm(contact._id)}
                     >
                       Delete

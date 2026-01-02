@@ -1,0 +1,213 @@
+.contact-list-container {
+  background: white;
+  border-radius: 10px;
+  padding: 2rem;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.contact-list-container h2 {
+  color: #333;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.contact-count {
+  color: #666;
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #666;
+}
+
+.empty-state p {
+  font-size: 1.1rem;
+}
+
+.table-container {
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+.contact-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.contact-table thead {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.contact-table th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s;
+}
+
+.contact-table th:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.contact-table th:last-child {
+  cursor: default;
+}
+
+.contact-table th:last-child:hover {
+  background: transparent;
+}
+
+.contact-table tbody tr {
+  border-bottom: 1px solid #e0e0e0;
+  transition: background 0.2s;
+}
+
+.contact-table tbody tr:hover {
+  background: #f8f9fa;
+}
+
+.contact-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.contact-table td {
+  padding: 1rem;
+}
+
+.message-cell {
+  max-width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.message-cell em {
+  color: #999;
+}
+
+.delete-btn {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+}
+
+.delete-btn:hover {
+  background: #c82333;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(220, 53, 69, 0.3);
+}
+
+.confirm-delete {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.confirm-btn,
+.cancel-btn {
+  border: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: bold;
+  transition: all 0.3s;
+}
+
+.confirm-btn {
+  background: #28a745;
+  color: white;
+}
+
+.confirm-btn:hover {
+  background: #218838;
+}
+
+.cancel-btn {
+  background: #6c757d;
+  color: white;
+}
+
+.cancel-btn:hover {
+  background: #5a6268;
+}
+
+/* Responsive Table */
+@media (max-width: 768px) {
+  .contact-list-container {
+    padding: 1.5rem;
+  }
+
+  .contact-list-container h2 {
+    font-size: 1.5rem;
+  }
+
+  .table-container {
+    border: none;
+  }
+
+  .contact-table,
+  .contact-table thead,
+  .contact-table tbody,
+  .contact-table th,
+  .contact-table td,
+  .contact-table tr {
+    display: block;
+  }
+
+  .contact-table thead {
+    display: none;
+  }
+
+  .contact-table tbody tr {
+    margin-bottom: 1rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 1rem;
+  }
+
+  .contact-table tbody tr:hover {
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .contact-table td {
+    padding: 0.5rem 0;
+    text-align: right;
+    position: relative;
+    padding-left: 50%;
+    border: none;
+  }
+
+  .contact-table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    width: 45%;
+    padding-right: 10px;
+    text-align: left;
+    font-weight: 600;
+    color: #667eea;
+  }
+
+  .message-cell {
+    max-width: none;
+    white-space: normal;
+  }
+
+  .confirm-delete {
+    justify-content: flex-end;
+  }
+}
